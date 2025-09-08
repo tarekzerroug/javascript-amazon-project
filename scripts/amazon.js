@@ -1,17 +1,6 @@
-const products = [
-    {
-        image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-        name:   "Black and Gray Athletic Cotton Socks - 6 Pairs",
-        rating : {stars :4.5 , count: 87},
-        priceCents : 1090 , 
-    } , 
-    {
-        image: "images/products/intermediate-composite-basketball.jpg",
-        name:   "Intermediate Size Basketball",
-        rating : {stars : 4, count: 127},
-        priceCents : 2095 ,
-    } 
-]
+
+import { cart } from '../data/carts.js';
+import { products } from '../data/products.js';
 
 products.forEach( (product) => {
     const HtmlString = `<div class="product-container">
@@ -33,7 +22,7 @@ products.forEach( (product) => {
           </div>
 
           <div class="product-price">
-            $10.90
+            $${(product.priceCents / 100)   .toFixed(2)}
           </div>
 
           <div class="product-quantity-container">
@@ -58,7 +47,7 @@ products.forEach( (product) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button data-product-id = "${product.id}" class="add-to-cart-button button-primary">
             Add to Cart
           </button>
         </div>`;
@@ -66,3 +55,26 @@ products.forEach( (product) => {
         document.querySelector('.js-products-grid').innerHTML += HtmlString;
 
     })
+
+document.querySelectorAll('.add-to-cart-button').forEach( (button) => {
+button.addEventListener('click', (event) => {
+    console.log(button.dataset.productId);
+    if (checkcart(button.dataset.productId) ){
+        console.log(cart);
+        return;
+    }
+    cart.push({id : button.dataset.productId, quantity: 1});
+    console.log(cart);
+    
+})
+})  
+
+function checkcart(id) { 
+  for (let item of cart) {
+    if (item.id === id) {
+      item.quantity += 1;
+      return true; 
+    }
+  }
+  return false; 
+}
