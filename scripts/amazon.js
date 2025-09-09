@@ -1,5 +1,5 @@
 
-import { cart } from '../data/carts.js';
+import { cart  , addcart} from '../data/carts.js';
 import { products } from '../data/products.js';
 
 products.forEach( (product) => {
@@ -58,23 +58,10 @@ products.forEach( (product) => {
 
 document.querySelectorAll('.add-to-cart-button').forEach( (button) => {
 button.addEventListener('click', (event) => {
-    console.log(button.dataset.productId);
-    if (checkcart(button.dataset.productId) ){
-        console.log(cart);
-        return;
-    }
-    cart.push({id : button.dataset.productId, quantity: 1});
-    console.log(cart);
-    
-})
-})  
+  alert('Added to cart !');
+  addcart(button.dataset.productId);
+   
 
-function checkcart(id) { 
-  for (let item of cart) {
-    if (item.id === id) {
-      item.quantity += 1;
-      return true; 
-    }
-  }
-  return false; 
-}
+  } )
+} );
+
